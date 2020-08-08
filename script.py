@@ -4,29 +4,28 @@ points = [1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 4, 1, 3, 10, 1, 1, 1, 1, 4, 4, 
 letters_to_points = { key:value for key, value in zip(letters, points)}
 letters_to_points[' '] = 0
 
+player_to_words = {'player1':['BLUE', 'TENNIS', 'EXIT'], 'wordNerd':['EARTH', 'EYES', 'MACHINE'], 'Lexi Con':['ERASER', 'BELLY', 'HUSKY'], 'Prof Reader':['ZAP', 'COMA', 'PERIOD']}
+player_to_points = {}
+
 def score_word(word):
     point_total = 0
 
     for letter in word:
-        point_total += letters_to_points.get(letter, 0)
+        point_total += letters_to_points.get(letter.upper(), 0)
 
     return point_total
 
 def play_word(player, word):
     player_to_words[player].append(word)
 
-player_to_words = {'player1':['BLUE', 'TENNIS', 'EXIT'], 'wordNerd':['EARTH', 'EYES', 'MACHINE'], 'Lexi Con':['ERASER', 'BELLY', 'HUSKY'], 'Prof Reader':['ZAP', 'COMA', 'PERIOD']}
+def update_point_totals():
+    for player, words in player_to_words.items():
+        player_points = 0
 
-player_to_points = {}
+        for word in words:
+            player_points += score_word(word)
 
-for player, words in player_to_words.items():
-    player_points = 0
+        player_to_points[player] = player_points
 
-    for word in words:
-        player_points += score_word(word)
-
-    player_to_points[player] = player_points
-
-
-
+update_point_totals()
 print(player_to_points)
